@@ -1,22 +1,13 @@
 <?php
 declare(strict_types=1);
 
-/**
- * MobilizaPro Enterprise Workforce Platform
- * Core Database helper.
- *
- * Patch 001: classe preparada para uso futuro.
- * Não altera o comportamento atual do sistema.
- */
 final class MobiDatabase
 {
     private static ?PDO $pdo = null;
 
     public static function get(): PDO
     {
-        if (self::$pdo instanceof PDO) {
-            return self::$pdo;
-        }
+        if (self::$pdo instanceof PDO) return self::$pdo;
 
         if (function_exists('mobi_pdo')) {
             self::$pdo = mobi_pdo();
@@ -70,9 +61,7 @@ final class MobiDatabase
             $pdo->commit();
             return $result;
         } catch (Throwable $e) {
-            if ($pdo->inTransaction()) {
-                $pdo->rollBack();
-            }
+            if ($pdo->inTransaction()) $pdo->rollBack();
             throw $e;
         }
     }

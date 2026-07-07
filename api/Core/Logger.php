@@ -1,23 +1,12 @@
 <?php
 declare(strict_types=1);
 
-/**
- * MobilizaPro Enterprise Workforce Platform
- * Logger simples em arquivo.
- *
- * Patch 001: classe preparada para uso futuro.
- * Não altera o comportamento atual do sistema.
- */
 final class MobiLogger
 {
     private static function logPath(): string
     {
         $dir = dirname(__DIR__, 2) . '/storage/logs';
-
-        if (!is_dir($dir)) {
-            @mkdir($dir, 0755, true);
-        }
-
+        if (!is_dir($dir)) @mkdir($dir, 0755, true);
         return $dir . '/mobilizapro-' . date('Y-m-d') . '.log';
     }
 
@@ -46,6 +35,7 @@ final class MobiLogger
             'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
             'uri' => $_SERVER['REQUEST_URI'] ?? null,
             'method' => $_SERVER['REQUEST_METHOD'] ?? null,
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null,
         ];
 
         @file_put_contents(

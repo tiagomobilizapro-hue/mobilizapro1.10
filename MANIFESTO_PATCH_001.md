@@ -1,4 +1,4 @@
-# PATCH 001 — Enterprise Core
+# PATCH-001 — Enterprise Core
 
 Produto: MobilizaPro Enterprise Workforce Platform  
 Versão base: 1.10 LTS  
@@ -8,43 +8,33 @@ Branch alvo: feature/stability-mysql-first
 
 Adicionar a primeira camada Enterprise sem alterar o comportamento atual do sistema.
 
-## Arquivos novos
+## Arquivos adicionados
 
 - api/Core/Database.php
 - api/Core/Logger.php
 - api/Core/Response.php
 - api/health.php
+- storage/logs/.gitkeep
 
 ## Arquivos alterados
 
-Nenhum arquivo existente foi alterado neste patch.
+Nenhum arquivo existente foi alterado.
 
 ## Banco de dados
 
-Nenhuma alteração de banco.
+Nenhuma alteração.
 
 ## Visual
 
-Nenhuma alteração visual.
+Nenhuma alteração.
 
-## Risco
+## Teste
 
-Baixo.
+Logar como Gerencial/Admin e acessar:
 
-## Como testar
-
-1. Copiar os arquivos para a branch feature/stability-mysql-first.
-2. Fazer commit.
-3. Subir em ambiente de teste.
-4. Logar com usuário Gerencial/Admin.
-5. Acessar:
-
-```txt
 https://mobilizapro.com/api/health.php
-```
 
 Resultado esperado:
-
 - database OK
 - PHP OK
 - session OK
@@ -52,9 +42,4 @@ Resultado esperado:
 
 ## Rollback
 
-Remover os arquivos adicionados:
-
-- api/Core/Database.php
-- api/Core/Logger.php
-- api/Core/Response.php
-- api/health.php
+Remover os arquivos adicionados neste patch.

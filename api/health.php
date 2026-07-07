@@ -1,46 +1,32 @@
 <?php
 declare(strict_types=1);
 
-/**
- * MobilizaPro Enterprise Workforce Platform
- * Health Check administrativo.
- *
- * Acesso:
- * /api/health.php
- *
- * Este arquivo não altera banco, não altera sessão e não altera dados.
- */
-
 $startedAt = microtime(true);
 
 require __DIR__ . '/bootstrap.php';
-
 require_once __DIR__ . '/Core/Database.php';
 require_once __DIR__ . '/Core/Logger.php';
 require_once __DIR__ . '/Core/Response.php';
 
 $user = function_exists('mobi_current_user') ? mobi_current_user() : null;
-
 if (!$user) {
-    MobiResponse::error('Sessão expirada. Faça login novamente.', 401);
+    MobiResponse::fail('Sessão expirada. Faça login novamente.', 401);
 }
 
 $perfil = function_exists('mb_strtolower')
     ? mb_strtolower((string)($user['perfil'] ?? ''), 'UTF-8')
     : strtolower((string)($user['perfil'] ?? ''));
 
-$allowedProfiles = ['gerencial', 'administrador', 'admin'];
-
-if (!in_array($perfil, $allowedProfiles, true)) {
-    MobiResponse::error('Acesso restrito ao nível gerencial/administrador.', 403);
+if (!in_array($perfil, ['gerencial', 'administrador', 'admin'], true)) {
+    MobiResponse::fail('Acesso restrito ao nível gerencial/administrador.', 403);
 }
 
 $status = [
+    'ok' => true,
     'app' => 'MobilizaPro',
     'product' => 'Enterprise Workforce Platform',
     'version' => '1.10 LTS',
     'channel' => 'health-check',
-    'ok' => true,
     'checks' => [],
 ];
 
